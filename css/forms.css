@@ -1,0 +1,104 @@
+/* ========================================
+   Form Styles
+   ======================================== */
+
+/* Time Input Styles */
+.time-input-mobile {
+    display: block;
+}
+
+.time-input-split-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.time-input-split-field {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.time-input-split-seconds {
+    width: 70px;
+}
+
+.time-input-split-milliseconds {
+    width: 90px;
+}
+
+.time-split-separator {
+    font-size: 20px;
+    font-weight: bold;
+    color: #666;
+}
+
+/* General Form Elements */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Sector Input Styles */
+.sector-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.sector-input label {
+    min-width: 80px;
+    font-weight: 600;
+}
+
+/* Admin Filter Styles */
+.admin-filter-select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    background: white;
+    cursor: pointer;
+}
+
+.admin-filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+}

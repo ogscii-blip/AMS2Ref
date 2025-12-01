@@ -1,0 +1,40 @@
+/* ========================================
+   Base Styles - Resets and Global Styles
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Purple sector styling */
+.purple-sector {
+    color: #9c27b0 !important;
+    font-weight: bold !important;
+    text-shadow: 0 0 2px rgba(156, 39, 176, 0.3);
+}
+
+.driver-link:hover,
+.driver-link-round:hover {
+    text-decoration: underline;
+    color: #5568d3 !important;
+}

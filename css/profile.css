@@ -1,0 +1,34 @@
+/* ========================================
+   Profile Page Styles
+   ======================================== */
+
+}
+
+.profile-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.profile-section h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+.section-description {
+  color: #666;
+  font-size: 14px;
+  margin: 0 0 20px 0;
+}
+
+.equipment-item {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #dee2e6;
+}
+
+.equipment-header {

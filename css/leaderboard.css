@@ -1,0 +1,204 @@
+/* ========================================
+   Leaderboard Styles
+   ======================================== */
+
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.leaderboard-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 15px;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+.leaderboard-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    color: #000;
+}
+
+.leaderboard-table tr:hover {
+    background: #f5f5f5;
+}
+
+.position-1 {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    font-weight: bold;
+}
+
+.position-2 {
+    background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+    font-weight: bold;
+}
+
+.position-3 {
+    background: linear-gradient(135deg, #cd7f32 0%, #e5a76a 100%);
+    font-weight: bold;
+}
+
+.medal {
+    font-size: 1.5em;
+--
+    }
+
+    .leaderboard-table thead {
+        display: none !important;
+    }
+
+    .leaderboard-table,
+    .leaderboard-table tbody,
+    .leaderboard-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .leaderboard-table tr {
+        margin-bottom: 12px;
+        border: 3px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 0;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+    #overall .leaderboard-table tr.position-1 {
+        border-color: #ffd700;
+    }
+
+    #overall .leaderboard-table tr.position-2 {
+        border-color: #c0c0c0;
+    }
+
+    #overall .leaderboard-table tr.position-3 {
+        border-color: #cd7f32;
+    }
+
+    #overall .leaderboard-table td:first-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 0 10px 0;
+        border: none;
+        background: linear-gradient(to bottom, #f8f9fa 0%, white 100%);
+        border-radius: 7px 7px 0 0;
+    }
+
+    #overall .leaderboard-table td:first-child:before {
+        display: none;
+    }
+
+    #overall .leaderboard-table td:first-child .medal {
+        font-size: 2.5em;
+        margin: 0;
+    }
+
+    #overall .leaderboard-table td:not(:first-child) {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        padding: 10px 20px;
+        border: none;
+        text-align: left;
+        gap: 15px;
+        align-items: center;
+    }
+
+    #overall .leaderboard-table td:not(:first-child):before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #667eea;
+        text-align: left;
+        font-size: 0.9em;
+    }
+
+    #overall .leaderboard-table td:not(:last-child):not(:first-child) {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    /* Overall leaderboard - make rows clickable */
+    #overall .leaderboard-table tr {
+        cursor: pointer;
+    }
+    
+    /* Round Results - FORCE all cells to display */
+    #round .leaderboard-table tr {
+        display: block !important;
+        min-height: auto !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    
+    #round .leaderboard-table tbody {
+        display: block !important;
+    }
+    
+    #round .leaderboard-table td {
+        display: grid !important;
+        grid-template-columns: 110px 1fr !important;
+        padding: 10px 20px !important;
+        border: none !important;
+        text-align: left !important;
+        gap: 15px !important;
+        align-items: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    #round .leaderboard-table td:before {
+        content: attr(data-label) !important;
+        font-weight: 600 !important;
+        color: #667eea !important;
+        text-align: left !important;
+        font-size: 0.9em !important;
+        display: block !important;
+    }
+    
+    #round .leaderboard-table td:not(:last-child) {
+        border-bottom: 1px solid #f0f0f0 !important;
+    }
+    
+    #round .leaderboard-table td:last-child {
+        border-bottom: none !important;
+    }
+    
+    /* First cell override (Driver name with background) */
+    #round .leaderboard-table td:first-child {
+        background: linear-gradient(to bottom, #f8f9fa 0%, white 100%) !important;
+        border-radius: 7px 7px 0 0 !important;
+        font-weight: bold !important;
+        padding: 15px 20px 10px 20px !important;
+    }
+    
+    /* Remove any height restrictions on position rows */
+    #round .leaderboard-table tr.position-1,
+    #round .leaderboard-table tr.position-2,
+    #round .leaderboard-table tr.position-3 {
+        min-height: auto !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        padding: 20px 10px;
+        margin-bottom: 15px;
+    }
+
+    #authSection {
+        width: 100% !important;
+        min-width: auto !important;
+        display: flex !important;
