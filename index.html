@@ -22,7 +22,7 @@
                     <div id="loginForm" style="display: flex; gap: 8px; align-items: center; justify-content: flex-end; flex-wrap: wrap;">
                         <input type="text" id="driverNameInput" placeholder="Driver Name" style="padding: 8px 12px; border-radius: 5px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); font-size: 0.9em; width: 140px;">
                         <input type="password" id="passwordInput" placeholder="Password" style="padding: 8px 12px; border-radius: 5px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); font-size: 0.9em; width: 130px;">
-                        <button onclick="login()" style="background: #4CAF50; color: white; border: none; padding: 9px 18px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: bold; white-space: nowrap;">Sign In</button>
+                        <button id="signInButton" onclick="login()" style="background: #4CAF50; color: white; border: none; padding: 9px 18px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: bold; white-space: nowrap; opacity: 0.6;" disabled title="Loading configuration...">⏳ Loading...</button>
                     </div>
                     <div id="userInfo" style="display: none; background: rgba(255,255,255,0.15); padding: 16px 20px; border-radius: 12px; backdrop-filter: blur(10px);">
                         <div style="display: flex; align-items: center; gap: 15px;">
@@ -600,20 +600,25 @@
 
     console.log('✅ Firebase initialized successfully!');
     
-    // Wait for script.js to load, then initialize
-    if (typeof loadConfig === 'function') {
-        loadConfig();
-        checkExistingSession();
-        loadLeaderboard();
-        setupSectorTimeInputs();
-        loadTracksAndCars();
-    }
+    // Wait for all scripts to load, then initialize
+    window.addEventListener('load', async () => {
+        if (typeof loadConfig === 'function') {
+            console.log('🚀 Starting initialization...');
+            await loadConfig();
+            console.log('✅ Config loaded, checking session...');
+            checkExistingSession();
+            loadLeaderboard();
+            setupSectorTimeInputs();
+            loadTracksAndCars();
+            console.log('✅ Initialization complete!');
+        }
+    });
 </script>
 
 <!-- Modular JavaScript files loaded in order -->
 <script src="js/helpers.js?v=4"></script>
 <script src="js/state.js?v=4"></script>
-<script src="js/config.js?v=4"></script>
+<script src="js/config.js?v=6"></script>
 <script src="js/navigation.js?v=4"></script>
 <script src="js/seasons.js?v=4"></script>
 <script src="js/leaderboard.js?v=4"></script>
