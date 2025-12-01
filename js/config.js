@@ -5,6 +5,8 @@
 /* -----------------------------
    Config & initial listeners
    ----------------------------- */
+let CONFIG_LOADED = false;
+
 async function loadConfig() {
   try {
     const configRef = window.firebaseRef(window.firebaseDB, 'Config');
@@ -37,7 +39,12 @@ async function loadConfig() {
         }
       }
       ALLOWED_USERS = allowed;
-      console.log('Config loaded. Users:', Object.keys(ALLOWED_USERS).length);
+      CONFIG_LOADED = true;
+      console.log('✅ Config loaded. Users:', Object.keys(ALLOWED_USERS));
+      console.log('   Available users:', Object.keys(ALLOWED_USERS).join(', '));
+      
+      // Update UI to show config is ready
+      updateLoginButtonState();
     });
 
     // Load driver profiles (object keyed by username if available)
@@ -72,11 +79,20 @@ window.firebaseOnValue(profilesRef, (snapshot) => {
         }
     });
 
-    console.log('Driver profiles loaded from Firebase:', Object.keys(DRIVER_PROFILES).length);
+    console.log('✅ Driver profiles loaded from Firebase:', Object.keys(DRIVER_PROFILES).length);
 });
 
   } catch (err) {
-    console.error('loadConfig error', err);
+    console.error('❌ loadConfig error', err);
+  }
+}
+
+function updateLoginButtonState() {
+  const loginButton = document.querySelector('button[onclick="login()"]');
+  if (loginButton && CONFIG_LOADED) {
+    loginButton.style.opacity = '1';
+    loginButton.style.cursor = 'pointer';
+    loginButton.disabled = false;
   }
 }
 

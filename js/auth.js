@@ -34,10 +34,35 @@ function flipDriverCard(button) {
 function login() {
   const driverName = document.getElementById('driverNameInput')?.value.trim();
   const password = document.getElementById('passwordInput')?.value;
-  if (!driverName || !password) { alert('⚠️ Please enter both driver name and password.'); return; }
-  if (!ALLOWED_USERS[driverName]) { alert(`⛔ Access Denied\n\nDriver name "${driverName}" is not authorized.`); return; }
+  
+  console.log('Login attempt:', driverName);
+  console.log('ALLOWED_USERS:', ALLOWED_USERS);
+  console.log('ALLOWED_USERS keys:', Object.keys(ALLOWED_USERS));
+  
+  if (!driverName || !password) { 
+    alert('⚠️ Please enter both driver name and password.'); 
+    return; 
+  }
+  
+  // Check if ALLOWED_USERS is loaded
+  if (Object.keys(ALLOWED_USERS).length === 0) {
+    alert('⏳ Configuration is still loading. Please wait a moment and try again.');
+    console.error('ALLOWED_USERS not loaded yet');
+    return;
+  }
+  
+  if (!ALLOWED_USERS[driverName]) { 
+    alert(`⛔ Access Denied\n\nDriver name "${driverName}" is not authorized.\n\nAllowed users: ${Object.keys(ALLOWED_USERS).join(', ')}`); 
+    console.error('User not in ALLOWED_USERS:', driverName);
+    console.error('Available users:', Object.keys(ALLOWED_USERS));
+    return; 
+  }
+  
   const storedPassword = ALLOWED_USERS[driverName].password;
-  if (password !== storedPassword) { alert('⛔ Incorrect password.'); return; }
+  if (password !== storedPassword) { 
+    alert('⛔ Incorrect password.'); 
+    return; 
+  }
 
   currentUser = { name: driverName, email: ALLOWED_USERS[driverName].email || '' };
   sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
