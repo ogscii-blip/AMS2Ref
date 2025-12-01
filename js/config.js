@@ -13,33 +13,51 @@ async function loadConfig() {
     const configRef = window.firebaseRef(window.firebaseDB, 'Config');
     
     // First, do an immediate GET to load config synchronously
-    const configSnapshot = await window.firebaseGet(configRef);
-    const configData = configSnapshot.val();
-    
-    if (configData) {
-      processConfigData(configData);
-    } else {
-      console.warn('⚠️ No config data found in Firebase');
+    try {
+      const configSnapshot = await window.firebaseGet(configRef);
+      const configData = configSnapshot.val();
+      
+      if (configData) {
+        console.log('📦 Config data received from Firebase');
+        processConfigData(configData);
+      } else {
+        console.warn('⚠️ No config data found in Firebase');
+      }
+    } catch (getError) {
+      console.error('❌ Error fetching config:', getError);
     }
     
     // Then set up listener for live updates
-    window.firebaseOnValue(configRef, (snapshot) => {
-      const configData = snapshot.val();
-      if (configData) {
-        processConfigData(configData);
-      }
-    });
+    try {
+      window.firebaseOnValue(configRef, (snapshot) => {
+        const configData = snapshot.val();
+        if (configData) {
+          console.log('🔄 Config updated via listener');
+          processConfigData(configData);
+        }
+      });
+    } catch (listenerError) {
+      console.error('❌ Error setting up config listener:', listenerError);
+    }
 
     // Load driver profiles
-    await loadDriverProfiles();
+    try {
+      await loadDriverProfiles();
+    } catch (profileError) {
+      console.error('❌ Error loading driver profiles:', profileError);
+    }
 
   } catch (err) {
     console.error('❌ loadConfig error', err);
+    console.error('Error details:', err.message, err.stack);
   }
 }
 
 function processConfigData(configData) {
+  console.log('⚙️ Processing config data...');
   const cfgArr = toArray(configData);
+  console.log('📊 Config array length:', cfgArr.length);
+  
   const configMap = {};
   cfgArr.forEach(row => {
     const setting = row['Setting']?.trim();
@@ -47,10 +65,18 @@ function processConfigData(configData) {
     if (setting && (value !== undefined)) configMap[setting] = value;
   });
 
+  console.log('🗺️ Config map keys:', Object.keys(configMap).length);
+
   APPS_SCRIPT_URL = configMap['apps_script_url'];
 
-  // Set admin username
-  updateAdminUsername(configMap);
+  // Set admin username (if function is available)
+  if (typeof updateAdminUsername === 'function') {
+    updateAdminUsername(configMap);
+  } else {
+    // Store admin username directly for later use
+    window.ADMIN_USERNAME_CONFIG = configMap['admin_username'] || null;
+    console.log('ℹ️ Admin username stored for later:', window.ADMIN_USERNAME_CONFIG);
+  }
 
   // Build ALLOWED_USERS from config allowed_name_i, allowed_email_i, allowed_password_i
   const allowed = {};
@@ -62,12 +88,17 @@ function processConfigData(configData) {
       allowed[name] = { email: email || '', password };
     }
   }
+  
+  console.log('👥 Found users:', Object.keys(allowed));
+  
   ALLOWED_USERS = allowed;
   CONFIG_LOADED = true;
   console.log('✅ Config loaded. Users:', Object.keys(ALLOWED_USERS).length);
   console.log('   Available users:', Object.keys(ALLOWED_USERS).join(', '));
+  console.log('🚦 CONFIG_LOADED set to:', CONFIG_LOADED);
   
   // Update UI to show config is ready
+  console.log('🔄 Calling updateLoginButtonState...');
   updateLoginButtonState();
 }
 
@@ -121,12 +152,27 @@ function processProfilesData(profilesData) {
 }
 
 function updateLoginButtonState() {
-  const loginButton = document.getElementById('signInButton') || document.querySelector('button[onclick="login()"]');
-  if (loginButton && CONFIG_LOADED) {
-    loginButton.style.opacity = '1';
-    loginButton.style.cursor = 'pointer';
-    loginButton.disabled = false;
-    loginButton.textContent = 'Sign In';
-    loginButton.title = 'Ready to login';
+  try {
+    const loginButton = document.getElementById('signInButton') || document.querySelector('button[onclick="login()"]');
+    console.log('🔘 Updating login button state. CONFIG_LOADED:', CONFIG_LOADED);
+    console.log('🔘 Button found:', !!loginButton);
+    
+    if (loginButton && CONFIG_LOADED) {
+      loginButton.style.opacity = '1';
+      loginButton.style.cursor = 'pointer';
+      loginButton.disabled = false;
+      loginButton.textContent = 'Sign In';
+      loginButton.title = 'Ready to login';
+      console.log('✅ Login button enabled!');
+    } else {
+      if (!loginButton) {
+        console.warn('⚠️ Login button not found in DOM');
+      }
+      if (!CONFIG_LOADED) {
+        console.warn('⚠️ CONFIG_LOADED is still false');
+      }
+    }
+  } catch (err) {
+    console.error('❌ Error updating login button state:', err);
   }
 }
